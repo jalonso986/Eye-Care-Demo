@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Tu plan de tratamiento personalizado | Clínica Baviera</title>
+  <link rel="icon" href="data:,"/>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Tu plan de tratamiento personalizado"/>
+  <meta property="og:description" content="Cirugía de catarata — tu plan explicado paso a paso."/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary"/>
+
+  <style>
+    /* ---- RESET & BASE (araujo design system, Baviera palette) ---- */
+    * { box-sizing:border-box; }
+    html,body { margin:0; padding:0; background:radial-gradient(circle at 20% 0%,rgba(74,159,216,.25),transparent 34%),radial-gradient(circle at 90% 18%,rgba(27,42,94,.18),transparent 32%),linear-gradient(180deg,#eaf1fb 0%,#f6f9fd 42%,#ffffff 100%); background-attachment:fixed; font-family:system-ui,-apple-system,'Segoe UI',sans-serif; overscroll-behavior:none; min-height:100vh; }
+    .app { width:100%; max-width:480px; min-height:100vh; position:relative; overflow-x:hidden; margin:0 auto; background:transparent; }
+
+    /* ---- HERO HEADER (state 1, in-flow) ---- */
+    .hero-hdr { position:relative; width:100%; height:48vh; min-height:230px; overflow:hidden; }
+    .hero-hdr::after { content:''; position:absolute; left:0; right:0; bottom:0; height:80px; background:linear-gradient(to bottom,transparent,#eaf1fb); pointer-events:none; z-index:3; }
+    .hero-hdr-bg { position:absolute; inset:0; background-size:cover; background-position:center; background-color:#dfe8f6; }
+    .hero-hdr-overlay { position:absolute; inset:0; background:rgba(230,237,248,0.74); }
+    .hero-hdr-content { position:relative; z-index:2; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px; text-align:center; }
+    .hero-hdr-logo-circle { width:88px; height:88px; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; margin-bottom:14px; flex-shrink:0; box-shadow:0 8px 24px rgba(27,42,94,.15); }
+    .hero-hdr-logo { max-width:64px; max-height:64px; object-fit:contain; display:block; }
+    .hero-hdr-logo-ph { color:#1B2A5E; font-weight:800; font-size:20px; }
+    .hero-hdr-text { color:#1B2A5E; font-size:21px; line-height:1.3; max-width:280px; font-weight:400; }
+    .hero-hdr-name { color:#1B2A5E; font-weight:700; }
+    .hero-hdr-sub { margin-top:12px; display:inline-block; background:rgba(74,159,216,0.16); color:#1B2A5E; font-size:13px; font-weight:700; padding:8px 18px; border-radius:20px; letter-spacing:.3px; }
+
+    /* ---- COMPACT HEADER (state 2, fixed, slides in after 80px) ---- */
+    .compact-hdr { position:fixed; top:0; left:50%; transform:translateX(-50%) translateY(-100%); width:100%; max-width:480px; height:64px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,.07); z-index:100; display:flex; align-items:center; justify-content:space-between; padding:0 16px; opacity:0; pointer-events:none; transition:transform .35s ease,opacity .35s ease; }
+    .compact-hdr.visible { transform:translateX(-50%) translateY(0); opacity:1; pointer-events:auto; }
+    .compact-hdr-left { display:flex; align-items:center; gap:10px; min-width:0; }
+    .compact-photo-ph { width:44px; height:44px; border-radius:50%; background:#fff; border:2px solid #1B2A5E; color:#1B2A5E; font-weight:700; font-size:16px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+    .compact-info { min-width:0; }
+    .compact-name { font-size:15px; font-weight:700; color:#1A1A2E; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .compact-clinic-name { font-size:11px; font-weight:400; color:#6B7280; line-height:1.25; margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .compact-clinic-addr { font-size:10px; color:#6B7280; line-height:1.3; margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .compact-logo { max-height:44px; max-width:96px; object-fit:contain; flex-shrink:0; }
+
+    /* ---- CONTENT ---- */
+    .home { padding:0 12px 0 12px; max-width:480px; margin:0 auto; }
+
+    /* Glass cards */
+    .sec-card { background:rgba(255,255,255,0.78); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border:1px solid rgba(255,255,255,0.7); box-shadow:0 18px 45px rgba(27,42,94,0.08); border-radius:16px; padding:16px; margin-bottom:10px; }
+    .blk-header { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+    .blk-num { width:28px; height:28px; border-radius:50%; background:#1B2A5E; color:#fff; font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .blk-title { font-size:13px; font-weight:700; color:#1B2A5E; text-transform:uppercase; letter-spacing:0.5px; line-height:1.3; }
+    .blk-sub { font-size:13px; color:#6B7280; line-height:1.5; margin:-6px 0 12px 38px; }
+
+    /* Carousel (block 1) */
+    .carousel-wrap { overflow:hidden; border-radius:10px; }
+    .carousel-track { display:flex; transition:transform .3s cubic-bezier(.4,0,.2,1); }
+    .carousel-slide { flex:0 0 100%; min-width:0; }
+    .car-img { width:100%; height:220px; object-fit:cover; display:block; background:#E8EEF8; }
+    .car-dots { display:flex; justify-content:center; gap:6px; padding:10px 0 2px; }
+    .car-dot { width:10px; height:10px; border-radius:50%; background:#D1D5DB; cursor:pointer; transition:background .2s,width .2s; flex-shrink:0; }
+    .car-dot.active { background:#4A9FD8; width:22px; border-radius:5px; }
+    .find-text { font-size:13.5px; color:#374151; line-height:1.55; margin-top:12px; }
+
+    /* Results table (block 1) */
+    .res-title { font-size:12px; font-weight:700; color:#1B2A5E; text-transform:uppercase; letter-spacing:.5px; margin:16px 0 8px; }
+    .res-table { width:100%; border-collapse:collapse; }
+    .res-table th { font-size:11.5px; font-weight:700; color:#1B2A5E; text-align:left; padding:8px 6px; border-bottom:2px solid rgba(27,42,94,.15); }
+    .res-table td { font-size:12px; color:#374151; line-height:1.4; padding:10px 6px; border-bottom:1px solid #EEF1F7; vertical-align:top; }
+    .res-table tr:last-child td { border-bottom:none; }
+    .res-lbl { display:flex; align-items:flex-start; gap:6px; color:#6B7280; font-size:11px; font-weight:600; line-height:1.35; }
+    .res-lbl svg { flex-shrink:0; margin-top:-1px; }
+    .res-detail { display:block; font-size:11px; color:#9CA3AF; margin-top:3px; }
+
+    /* Phase cards (block 2) */
+    .ph-strip { display:flex; overflow-x:auto; gap:10px; padding:4px 2px 8px; scrollbar-width:none; -ms-overflow-style:none; }
+    .ph-strip::-webkit-scrollbar { display:none; }
+    .ph-card { flex:0 0 236px; background:#fff; border:1px solid #E3E8F2; border-radius:14px; padding:14px; display:flex; flex-direction:column; box-shadow:0 6px 18px rgba(27,42,94,.06); }
+    .ph-num { width:26px; height:26px; border-radius:50%; background:#1B2A5E; color:#fff; font-weight:700; font-size:12px; display:flex; align-items:center; justify-content:center; margin-bottom:10px; flex-shrink:0; }
+    .ph-title { font-size:14px; font-weight:700; color:#1B2A5E; line-height:1.3; margin-bottom:6px; }
+    .ph-desc { font-size:12.5px; color:#6B7280; line-height:1.5; flex:1; }
+    .ph-chip { margin-top:12px; align-self:flex-start; background:rgba(74,159,216,0.14); color:#1B2A5E; font-size:11px; font-weight:700; padding:7px 12px; border-radius:16px; line-height:1.2; }
+
+    /* Risk grid (block 3) */
+    .risk-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .risk-card { background:#fff; border:1px solid #E3E8F2; border-radius:12px; padding:12px; }
+    .risk-ic { width:30px; height:30px; border-radius:50%; background:rgba(74,159,216,0.14); display:flex; align-items:center; justify-content:center; margin-bottom:8px; }
+    .risk-title { font-size:13px; font-weight:700; color:#1B2A5E; line-height:1.3; margin-bottom:4px; }
+    .risk-text { font-size:11.5px; color:#6B7280; line-height:1.45; }
+
+    /* Before/after slider (block 4) */
+    .ba-wrap { position:relative; height:210px; border-radius:10px; overflow:hidden; cursor:ew-resize; touch-action:pan-y; background:#E8EEF8; }
+    .ba-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; pointer-events:none; }
+    .ba-before { filter:blur(4px) brightness(1.15) saturate(0.85); }
+    .ba-after { clip-path:inset(0 0 0 50%); }
+    .ba-divider { position:absolute; top:0; bottom:0; left:50%; width:2px; background:rgba(255,255,255,.95); z-index:10; transform:translateX(-50%); pointer-events:none; }
+    .ba-handle { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:44px; height:44px; border-radius:50%; background:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,.25); font-size:16px; color:#1B2A5E; font-weight:700; }
+    .ba-label { position:absolute; top:10px; font-size:10px; font-weight:700; color:#fff; background:rgba(27,42,94,.65); padding:4px 9px; border-radius:20px; letter-spacing:.3px; z-index:9; }
+    .ba-label-b { left:10px; }
+    .ba-label-a { right:10px; }
+    .ba-note { font-size:11px; color:#9CA3AF; font-style:italic; line-height:1.5; margin-top:10px; }
+    .ben-row { display:flex; align-items:flex-start; gap:10px; padding:9px 0; }
+    .ben-ic { width:36px; height:36px; border-radius:50%; background:rgba(27,42,94,0.08); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .ben-title { font-size:13.5px; font-weight:700; color:#1B2A5E; line-height:1.3; }
+    .ben-text { font-size:12.5px; color:#6B7280; line-height:1.45; margin-top:2px; }
+
+    /* Lens comparison table (block 5) */
+    .lens-note { font-size:11.5px; color:#9CA3AF; font-style:italic; line-height:1.45; margin:-6px 0 12px 38px; }
+    .lens-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; border:1px solid #E3E8F2; border-radius:12px; background:#fff; }
+    .lens-table { border-collapse:separate; border-spacing:0; min-width:640px; width:100%; }
+    .lens-table th, .lens-table td { padding:9px 10px; font-size:11.5px; line-height:1.35; border-bottom:1px solid #EEF1F7; }
+    .lens-table tr:last-child th, .lens-table tr:last-child td { border-bottom:none; }
+    .lens-table thead th { vertical-align:top; }
+    .lens-sticky { position:sticky; left:0; background:#fff; z-index:2; text-align:left; color:#6B7280; font-weight:600; min-width:118px; max-width:130px; box-shadow:2px 0 4px rgba(27,42,94,.05); }
+    .lens-head { text-align:center; min-width:118px; }
+    .lens-head-name { font-size:12px; font-weight:800; line-height:1.25; }
+    .lens-head-tag { font-size:9.5px; font-weight:600; opacity:.75; text-transform:uppercase; letter-spacing:.3px; margin-top:2px; }
+    .lens-more { margin-top:8px; display:inline-block; border:1.5px solid currentColor; background:#fff; border-radius:14px; padding:6px 12px; font-size:10.5px; font-weight:700; cursor:pointer; font-family:inherit; line-height:1.2; min-height:28px; }
+    .lens-cell { text-align:center; color:#374151; }
+    .lens-stars { font-size:12px; letter-spacing:1px; white-space:nowrap; }
+    .lens-price { font-weight:800; font-size:12px; white-space:nowrap; }
+
+    /* Financing band + CTA (block 5) */
+    .cta-band { background:linear-gradient(135deg,#1B2A5E 0%,#27408f 100%); border-radius:16px; padding:20px 18px; margin-top:14px; color:#fff; }
+    .cta-band-text { font-size:13.5px; line-height:1.55; margin-bottom:14px; color:rgba(255,255,255,.94); }
+    .cta-btn { display:flex; align-items:center; justify-content:center; width:100%; min-height:48px; background:#4A9FD8; color:#fff; font-size:15px; font-weight:700; border:none; border-radius:26px; cursor:pointer; text-decoration:none; font-family:inherit; padding:12px 16px; }
+    .cta-closing { font-size:12px; color:rgba(255,255,255,.8); line-height:1.5; margin-top:12px; text-align:center; }
+
+    /* Lens details modal */
+    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(15,23,42,.55); z-index:200; align-items:center; justify-content:center; padding:20px; }
+    .modal-overlay.open { display:flex; }
+    .modal-card { background:#fff; border-radius:16px; padding:20px; max-width:340px; width:100%; box-shadow:0 24px 60px rgba(15,23,42,.35); }
+    .modal-title { font-size:15px; font-weight:800; margin-bottom:4px; }
+    .modal-tag { font-size:10.5px; font-weight:600; text-transform:uppercase; letter-spacing:.3px; opacity:.7; margin-bottom:10px; }
+    .modal-text { font-size:13px; color:#374151; line-height:1.55; }
+    .modal-close { margin-top:16px; width:100%; min-height:44px; background:rgba(27,42,94,0.08); color:#1B2A5E; border:none; border-radius:22px; font-size:13.5px; font-weight:700; cursor:pointer; font-family:inherit; }
+
+    /* Footer */
+    .footer { text-align:center; padding:26px 16px 44px; }
+    .footer-logo { max-height:34px; max-width:120px; object-fit:contain; display:block; margin:0 auto 8px; }
+    .footer-name { font-size:12px; font-weight:700; color:#1B2A5E; }
+    .footer-addr { font-size:11px; color:#6B7280; margin-top:2px; }
+    .footer-note { font-size:10.5px; color:#9CA3AF; font-style:italic; margin-top:10px; line-height:1.5; }
+  </style>
+</head>
+<body>
+  <div class="app">
+
+    <!-- Compact header: fixed, slides in after 80px scroll -->
+    <div id="compactHeader" class="compact-hdr"></div>
+
+    <!-- Hero header -->
+    <div id="heroHeader" class="hero-hdr">
+      <div class="hero-hdr-bg" id="heroBg"></div>
+      <div class="hero-hdr-overlay"></div>
+      <div class="hero-hdr-content" id="heroContent"></div>
+    </div>
+
+    <div class="home" id="homeContent"></div>
+
+    <div class="footer" id="footerContent"></div>
+  </div>
+
+  <!-- Lens details modal -->
+  <div class="modal-overlay" id="lensModal" onclick="if(event.target===this)closeLensModal()">
+    <div class="modal-card">
+      <div class="modal-title" id="lensModalTitle"></div>
+      <div class="modal-tag" id="lensModalTag"></div>
+      <div class="modal-text" id="lensModalText"></div>
+      <button class="modal-close" onclick="closeLensModal()">Cerrar</button>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    /* ---- HELPERS ---- */
+    function safe(s) { return (s === null || s === undefined) ? '' : String(s); }
+    function hasItems(a) { return Array.isArray(a) && a.length > 0; }
+
+    /* ---- SVG LINE ICONS (stroke style, design system) ---- */
+    function icon(name, size, color) {
+      size = size || 18; color = color || '#1B2A5E';
+      var open = '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">';
+      var paths = {
+        glasses: '<circle cx="6.5" cy="15" r="3.5"/><circle cx="17.5" cy="15" r="3.5"/><path d="M10 14.5c.6-.8 3.4-.8 4 0M3 15l1.6-6.2h1.9M21 15l-1.6-6.2h-1.9"/>',
+        droplet: '<path d="M12 3s6 6.7 6 11a6 6 0 0 1-12 0c0-4.3 6-11 6-11z"/>',
+        lens:    '<circle cx="11" cy="11" r="7"/><line x1="16.2" y1="16.2" x2="21" y2="21"/>',
+        eye:     '<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3"/>',
+        sun:     '<circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22"/><line x1="2" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22" y2="12"/><line x1="4.9" y1="4.9" x2="6.7" y2="6.7"/><line x1="17.3" y1="17.3" x2="19.1" y2="19.1"/><line x1="4.9" y1="19.1" x2="6.7" y2="17.3"/><line x1="17.3" y1="6.7" x2="19.1" y2="4.9"/>',
+        heart:   '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
+        info:    '<circle cx="12" cy="12" r="10"/><line x1="12" y1="10" x2="12" y2="16"/><line x1="12" y1="7" x2="12.01" y2="7"/>',
+        sharp:   '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="#1B2A5E"/>'
+      };
+      return open + (paths[name] || paths.info) + '</svg>';
+    }
+
+    function blkHeader(num, title) {
+      return '<div class="blk-header"><div class="blk-num">' + num + '</div><div class="blk-title">' + safe(title) + '</div></div>';
+    }
+
+    /* ---- HEADERS ---- */
+    function renderHeroHeader() {
+      var bg = $('heroBg');
+      if (HERO && HERO.background) bg.style.backgroundImage = "url('" + HERO.background + "')";
+      $('heroContent').innerHTML =
+        '<div class="hero-hdr-logo-circle">' +
+          '<img class="hero-hdr-logo" src="' + safe(CLINIC.logo) + '" alt="' + safe(CLINIC.name) + '" onerror="this.outerHTML=\'<span class=&quot;hero-hdr-logo-ph&quot;>' + safe(CLINIC.name).charAt(0) + '</span>\'"/>' +
+        '</div>' +
+        '<div class="hero-hdr-text"><span class="hero-hdr-name">' + safe(PATIENT.firstName) + '</span>, ' + safe(DOC.title).charAt(0).toLowerCase() + safe(DOC.title).slice(1) + '</div>' +
+        '<div class="hero-hdr-sub">' + safe(DOC.subtitle) + '</div>';
+    }
+
+    function renderCompactHeader() {
+      $('compactHeader').innerHTML =
+        '<div class="compact-hdr-left">' +
+          '<div class="compact-photo-ph">' + safe(PATIENT.initials) + '</div>' +
+          '<div class="compact-info">' +
+            '<div class="compact-name">' + safe(PATIENT.name) + '</div>' +
+            '<div class="compact-clinic-name">' + safe(CLINIC.name) + '</div>' +
+            '<div class="compact-clinic-addr">📍 ' + safe(CLINIC.address) + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<img class="compact-logo" src="' + safe(CLINIC.logo) + '" alt="" onerror="this.style.display=\'none\'"/>';
+    }
+
+    /* ---- BLOQUE 1 — Qué hemos detectado ---- */
+    function renderBlock1() {
+      if (!FINDINGS) return '';
+      var imgs = hasItems(FINDINGS.images) ? FINDINGS.images : [];
+      var carousel = '';
+      if (imgs.length > 0) {
+        var slides = imgs.map(function(src) {
+          return '<div class="carousel-slide"><img class="car-img" src="' + src + '" alt="" onerror="this.style.opacity=0"></div>';
+        }).join('');
+        var dots = imgs.map(function(_, i) {
+          return '<div class="car-dot' + (i === 0 ? ' active' : '') + '"></div>';
+        }).join('');
+        carousel =
+          '<div class="carousel-wrap"><div class="carousel-track" id="car1track">' + slides + '</div></div>' +
+          (imgs.length > 1 ? '<div class="car-dots" id="car1dots">' + dots + '</div>' : '');
+      }
+      var table = '';
+      if (hasItems(FINDINGS.resultsRows)) {
+        var cols = FINDINGS.resultsColumns || ['', ''];
+        var rows = FINDINGS.resultsRows.map(function(r) {
+          function cell(c) {
+            return '<td>' + safe(c.text) + (c.detail ? '<span class="res-detail">' + safe(c.detail) + '</span>' : '') + '</td>';
+          }
+          return '<tr>' +
+            '<td><span class="res-lbl">' + icon(r.icon, 16, '#4A9FD8') + '<span>' + safe(r.label) + '</span></span></td>' +
+            cell(r.od) + cell(r.oi) +
+          '</tr>';
+        }).join('');
+        table =
+          '<div class="res-title">' + safe(FINDINGS.resultsTitle) + '</div>' +
+          '<table class="res-table">' +
+            '<thead><tr><th></th><th>' + safe(cols[0]) + '</th><th>' + safe(cols[1]) + '</th></tr></thead>' +
+            '<tbody>' + rows + '</tbody>' +
+          '</table>';
+      }
+      return '<div class="sec-card">' +
+        blkHeader(1, '¿Qué hemos detectado?') +
+        carousel +
+        (FINDINGS.text ? '<div class="find-text">' + safe(FINDINGS.text) + '</div>' : '') +
+        table +
+      '</div>';
+    }
+
+    /* ---- BLOQUE 2 — Tratamiento propuesto ---- */
+    function renderBlock2() {
+      if (!hasItems(PHASES)) return '';
+      var cards = PHASES.map(function(p) {
+        return '<div class="ph-card">' +
+          '<div class="ph-num">' + p.step + '</div>' +
+          '<div class="ph-title">' + safe(p.title) + '</div>' +
+          '<div class="ph-desc">' + safe(p.description) + '</div>' +
+          (p.chip ? '<div class="ph-chip">' + safe(p.chip) + '</div>' : '') +
+        '</div>';
+      }).join('');
+      return '<div class="sec-card">' +
+        blkHeader(2, 'Tratamiento propuesto') +
+        '<div class="ph-strip">' + cards + '</div>' +
+      '</div>';
+    }
+
+    /* ---- BLOQUE 3 — Qué pasa si se pospone ---- */
+    function renderBlock3() {
+      if (!hasItems(RISKS)) return '';
+      var cards = RISKS.map(function(r) {
+        return '<div class="risk-card">' +
+          '<div class="risk-ic">' + icon('info', 16, '#4A9FD8') + '</div>' +
+          '<div class="risk-title">' + safe(r.title) + '</div>' +
+          '<div class="risk-text">' + safe(r.text) + '</div>' +
+        '</div>';
+      }).join('');
+      return '<div class="sec-card">' +
+        blkHeader(3, '¿Qué pasa si se pospone?') +
+        '<div class="risk-grid">' + cards + '</div>' +
+      '</div>';
+    }
+
+    /* ---- BLOQUE 4 — Resultado esperado ---- */
+    function renderBlock4() {
+      var er = (typeof EXPECTED_RESULT !== 'undefined' && EXPECTED_RESULT) ? EXPECTED_RESULT : null;
+      if (!er) return '';
+      var slider = '';
+      if (er.image) {
+        slider =
+          '<div class="ba-wrap" id="baWrap">' +
+            '<img class="ba-img ba-before" src="' + er.image + '" alt="' + safe(er.labelBefore) + '" onerror="this.style.opacity=0">' +
+            '<img class="ba-img ba-after" src="' + er.image + '" alt="' + safe(er.labelAfter) + '" onerror="this.style.opacity=0">' +
+            '<div class="ba-divider"><div class="ba-handle">↔</div></div>' +
+            '<div class="ba-label ba-label-b">' + safe(er.labelBefore) + '</div>' +
+            '<div class="ba-label ba-label-a">' + safe(er.labelAfter) + '</div>' +
+          '</div>' +
+          (er.disclaimer ? '<div class="ba-note">' + safe(er.disclaimer) + '</div>' : '');
+      }
+      var bens = hasItems(er.benefits) ? er.benefits.map(function(b) {
+        return '<div class="ben-row">' +
+          '<div class="ben-ic">' + icon(b.icon, 18, '#1B2A5E') + '</div>' +
+          '<div><div class="ben-title">' + safe(b.title) + '</div><div class="ben-text">' + safe(b.text) + '</div></div>' +
+        '</div>';
+      }).join('') : '';
+      return '<div class="sec-card">' +
+        blkHeader(4, 'Resultado esperado') +
+        (er.subtitle ? '<div class="blk-sub">' + safe(er.subtitle) + '</div>' : '') +
+        slider +
+        (bens ? '<div style="margin-top:10px;">' + bens + '</div>' : '') +
+      '</div>';
+    }
+
+    /* ---- BLOQUE 5 — Precio y financiación ---- */
+    function stars(n, accent) {
+      var out = '';
+      for (var i = 1; i <= 5; i++) {
+        out += i <= n
+          ? '<span style="color:' + accent + ';">★</span>'
+          : '<span style="color:#D1D5DB;">☆</span>';
+      }
+      return '<span class="lens-stars">' + out + '</span>';
+    }
+
+    function renderBlock5() {
+      if (typeof LENSES === 'undefined' || !LENSES || !hasItems(LENSES.columns)) return '';
+      var cols = LENSES.columns;
+      var labels = LENSES.rowLabels || [];
+      var priceRowIdx = labels.length - 1;
+
+      var headCells = cols.map(function(c, i) {
+        return '<th class="lens-head" style="background:' + c.accent + '14;color:' + c.accent + ';">' +
+          '<div class="lens-head-name">' + safe(c.name) + '</div>' +
+          '<div class="lens-head-tag">' + safe(c.tag) + '</div>' +
+          '<button class="lens-more" style="color:' + c.accent + ';" onclick="openLensModal(' + i + ')">Más detalles</button>' +
+        '</th>';
+      }).join('');
+
+      var bodyRows = labels.map(function(lbl, r) {
+        var cells = cols.map(function(c) {
+          var v = c.values[r];
+          var inner = (typeof v === 'number') ? stars(v, c.accent)
+            : (r === priceRowIdx ? '<span class="lens-price" style="color:' + c.accent + ';">' + safe(v) + '</span>' : safe(v));
+          return '<td class="lens-cell">' + inner + '</td>';
+        }).join('');
+        return '<tr><th class="lens-sticky">' + safe(lbl) + '</th>' + cells + '</tr>';
+      }).join('');
+
+      var band = '';
+      if (typeof FINANCING !== 'undefined' && FINANCING) {
+        band =
+          '<div class="cta-band">' +
+            '<div class="cta-band-text">' + safe(FINANCING.band) + '</div>' +
+            '<a class="cta-btn" href="' + safe(FINANCING.ctaHref) + '" target="_blank" rel="noopener">' + safe(FINANCING.ctaLabel) + '</a>' +
+            (FINANCING.closing ? '<div class="cta-closing">' + safe(FINANCING.closing) + '</div>' : '') +
+          '</div>';
+      }
+
+      return '<div class="sec-card">' +
+        blkHeader(5, 'Precio y financiación') +
+        '<div class="blk-sub" style="margin-bottom:4px;">' + safe(LENSES.subtitle) + '</div>' +
+        '<div class="lens-note">' + safe(LENSES.note) + '</div>' +
+        '<div class="lens-wrap">' +
+          '<table class="lens-table">' +
+            '<thead><tr><th class="lens-sticky"></th>' + headCells + '</tr></thead>' +
+            '<tbody>' + bodyRows + '</tbody>' +
+          '</table>' +
+        '</div>' +
+        band +
+      '</div>';
+    }
+
+    /* ---- FOOTER ---- */
+    function renderFooter() {
+      $('footerContent').innerHTML =
+        '<img class="footer-logo" src="' + safe(CLINIC.logo) + '" alt="" onerror="this.style.display=\'none\'"/>' +
+        '<div class="footer-name">' + safe(CLINIC.name) + '</div>' +
+        '<div class="footer-addr">' + safe(CLINIC.address) + '</div>' +
+        (typeof FOOTER !== 'undefined' && FOOTER && FOOTER.note ? '<div class="footer-note">' + safe(FOOTER.note) + '</div>' : '');
+    }
+
+    /* ---- CAROUSEL (touch swipe + dots, from araujo engine) ---- */
+    function initCarousel(trackId, dotsId) {
+      var track = document.getElementById(trackId);
+      if (!track) return;
+      var total = track.children.length;
+      var current = 0;
+      var startX = 0;
+      var dotsEl = document.getElementById(dotsId);
+      function goTo(idx) {
+        current = Math.max(0, Math.min(total - 1, idx));
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        if (dotsEl) {
+          var dots = dotsEl.querySelectorAll('.car-dot');
+          dots.forEach(function(d, i) { d.classList.toggle('active', i === current); });
+        }
+      }
+      track.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
+      track.addEventListener('touchend', function(e) {
+        var diff = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) goTo(current + (diff > 0 ? 1 : -1));
+      }, { passive: true });
+      if (dotsEl) {
+        Array.prototype.forEach.call(dotsEl.querySelectorAll('.car-dot'), function(d, i) {
+          d.addEventListener('click', function() { goTo(i); });
+        });
+      }
+    }
+
+    /* ---- BEFORE/AFTER SLIDER (drag divider, from araujo engine) ---- */
+    function initBeforeAfter(wrapId) {
+      var wrap = document.getElementById(wrapId);
+      if (!wrap) return;
+      var afterImg = wrap.querySelector('.ba-after');
+      var divider = wrap.querySelector('.ba-divider');
+      var dragging = false;
+      function setPos(clientX) {
+        var rect = wrap.getBoundingClientRect();
+        var pct = Math.max(5, Math.min(95, (clientX - rect.left) / rect.width * 100));
+        afterImg.style.clipPath = 'inset(0 0 0 ' + pct + '%)';
+        divider.style.left = pct + '%';
+      }
+      wrap.addEventListener('mousedown', function(e) { dragging = true; setPos(e.clientX); e.preventDefault(); });
+      document.addEventListener('mouseup', function() { dragging = false; });
+      document.addEventListener('mousemove', function(e) { if (dragging) setPos(e.clientX); });
+      wrap.addEventListener('touchstart', function(e) { dragging = true; setPos(e.touches[0].clientX); }, { passive: true });
+      document.addEventListener('touchend', function() { dragging = false; });
+      document.addEventListener('touchmove', function(e) { if (dragging) setPos(e.touches[0].clientX); }, { passive: true });
+    }
+
+    /* ---- LENS MODAL ---- */
+    function openLensModal(i) {
+      var c = LENSES.columns[i];
+      if (!c) return;
+      $('lensModalTitle').textContent = c.name;
+      $('lensModalTitle').style.color = c.accent;
+      $('lensModalTag').textContent = c.tag || '';
+      $('lensModalText').textContent = c.details || '';
+      $('lensModal').classList.add('open');
+    }
+    function closeLensModal() {
+      $('lensModal').classList.remove('open');
+    }
+
+    /* ---- SCROLL HEADER (compact slides in after 80px) ---- */
+    (function() {
+      var on = false;
+      window.addEventListener('scroll', function() {
+        var y = window.scrollY || window.pageYOffset;
+        var compact = document.getElementById('compactHeader');
+        if (y > 80 && !on) { on = true; if (compact) compact.classList.add('visible'); }
+        else if (y <= 80 && on) { on = false; if (compact) compact.classList.remove('visible'); }
+      }, { passive: true });
+    })();
+
+    /* ---- BOOTSTRAP ---- */
+    renderHeroHeader();
+    renderCompactHeader();
+    $('homeContent').innerHTML =
+      renderBlock1() + renderBlock2() + renderBlock3() + renderBlock4() + renderBlock5();
+    renderFooter();
+    if (FINDINGS && hasItems(FINDINGS.images) && FINDINGS.images.length > 1) initCarousel('car1track', 'car1dots');
+    if (EXPECTED_RESULT && EXPECTED_RESULT.image) initBeforeAfter('baWrap');
+  </script>
+</body>
+</html>
