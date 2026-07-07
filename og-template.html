@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>OG Template — Clínica Baviera (Eye-Care-Demo)</title>
+  <style>
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html, body { width:1200px; height:630px; font-family:system-ui,-apple-system,sans-serif; background:#fff; -webkit-font-smoothing:antialiased; }
+    .og-wrap { display:flex; width:1200px; height:630px; background:#fff; }
+
+    /* LEFT COLUMN */
+    .og-left { width:720px; height:630px; padding:50px; display:flex; flex-direction:column; }
+
+    /* TOP ROW: badge (left) + logo (right) */
+    .top-row { display:flex; justify-content:space-between; align-items:center; gap:16px; }
+    .badge { display:inline-flex; align-items:center; gap:10px; background:#1B2A5E; color:#fff; border-radius:24px; padding:12px 24px; font-size:22px; font-weight:600; line-height:1; text-transform:uppercase; letter-spacing:.3px; }
+    .clinic-logo { height:70px; object-fit:contain; display:block; }
+
+    /* HEADLINE — vertically centered in remaining space */
+    .headline { flex:1; display:flex; flex-direction:column; justify-content:center; line-height:1.1; }
+    .headline-1, .headline-2 { color:#1B2A5E; font-size:80px; font-weight:800; line-height:1.1; }
+    .headline-3 { color:#4A9FD8; font-size:80px; font-weight:800; line-height:1.1; }
+
+    /* RIGHT COLUMN */
+    .og-right { width:480px; height:630px; flex-shrink:0; overflow:hidden; position:relative; }
+    .og-right img { width:100%; height:630px; object-fit:cover; object-position:center; display:block; }
+    .og-right-overlay { position:absolute; inset:0; background:linear-gradient(135deg,rgba(27,42,94,0.18),rgba(74,159,216,0.10)); }
+  </style>
+</head>
+<body>
+  <div class="og-wrap">
+    <div class="og-left">
+
+      <div class="top-row">
+        <div class="badge">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+          <span id="ogSubtitle"></span>
+        </div>
+        <img class="clinic-logo" id="ogClinicLogo" alt="Logo"/>
+      </div>
+
+      <div class="headline">
+        <div class="headline-1"><span id="ogFirstName"></span>,</div>
+        <div class="headline-2" id="ogTitleLine2"></div>
+        <div class="headline-3" id="ogTitleLine3"></div>
+      </div>
+    </div>
+
+    <div class="og-right">
+      <img id="ogRightImage" alt=""/>
+      <div class="og-right-overlay"></div>
+    </div>
+  </div>
+
+  <script>
+    /* ========================================================
+       OG IMAGE CONFIG — edit here, then run: node generate-og.js
+       ======================================================== */
+    const OG_CONFIG = {
+      patientFirstName: "Carla",
+      titleLine2: "tu plan de",
+      titleLine3: "tratamiento",
+      subtitle: "Cirugía de catarata",
+      clinicName: "Clínica Baviera",
+      clinicLogo: "assets/logo_baviera.jpg",
+      rightImage: "assets/header_bg.jpg"
+    };
+
+    document.getElementById('ogFirstName').textContent = OG_CONFIG.patientFirstName;
+    document.getElementById('ogTitleLine2').textContent = OG_CONFIG.titleLine2;
+    document.getElementById('ogTitleLine3').textContent = OG_CONFIG.titleLine3;
+    document.getElementById('ogSubtitle').textContent = OG_CONFIG.subtitle;
+    document.getElementById('ogClinicLogo').src = OG_CONFIG.clinicLogo;
+    document.getElementById('ogClinicLogo').alt = OG_CONFIG.clinicName;
+    document.getElementById('ogRightImage').src = OG_CONFIG.rightImage;
+  </script>
+</body>
+</html>
