@@ -121,10 +121,10 @@ const LENSES = {
     'Visión intermedia',
     'Visión cercana',
     'Corrige astigmatismo',
-    'Dependencia de gafas',
-    'Cobertura pública (SNS)',
-    'Seguro privado (reembolso habitual)',
-    'Precio estimado (por ojo)'
+    'Dependencia gafas',
+    'Cobertura SNS',
+    'Seguro privado',
+    'Precio (por ojo)'
   ],
   /* One column per lens. `values` follows rowLabels order.
      Numeric value = star rating (out of 5); string = literal cell. */

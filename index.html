@@ -120,6 +120,13 @@
     .lens-stars { font-size:12px; letter-spacing:1px; white-space:nowrap; }
     .lens-price { font-weight:800; font-size:12px; white-space:nowrap; }
 
+    /* Mobile: cap the sticky row-label column to a fixed width so it
+       can't grow with content and crowd out the lens columns. */
+    @media (max-width:479px) {
+      .lens-table th.lens-sticky { width:7rem; min-width:7rem; max-width:7rem; font-size:0.625rem; padding:8px 6px; }
+      .lens-stars { font-size:10px; letter-spacing:0.5px; }
+    }
+
     /* Financing band + CTA (block 5) */
     .cta-band { background:linear-gradient(135deg,#1B2A5E 0%,#27408f 100%); border-radius:16px; padding:20px 18px; margin-top:14px; color:#fff; }
     .cta-band-text { font-size:13.5px; line-height:1.55; margin-bottom:14px; color:rgba(255,255,255,.94); }
