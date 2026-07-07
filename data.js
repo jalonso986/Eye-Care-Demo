@@ -163,7 +163,7 @@ const LENSES = {
 const FINANCING = {
   band: 'Financiación disponible hasta 24 meses sin intereses. Nuestro equipo te ayudará a elegir la mejor opción para ti.',
   ctaLabel: 'Quiero más información 💬',
-  ctaHref: 'https://wa.me/',   // placeholder — replace with the clinic's WhatsApp number
+  ctaHref: 'https://wa.me/4917650583095',
   closing: '¿Dudas? Habla con tu oftalmólogo/a en tu próxima visita o escríbenos.'
 };
 
