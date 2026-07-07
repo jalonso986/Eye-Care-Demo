@@ -100,7 +100,7 @@ const RISKS = [
 /* ── BLOQUE 4 — Resultado esperado ──────────────────────────────── */
 const EXPECTED_RESULT = {
   subtitle: 'Así es como podrías ver después de la cirugía',
-  image: 'assets/resultado.jpg',   // single image; "before" side gets a CSS blur filter
+  image: 'assets/resultado.png',   // single image; "before" side gets a CSS blur filter
   labelBefore: 'Visión con catarata',
   labelAfter: 'Visión después de la cirugía',
   benefits: [
